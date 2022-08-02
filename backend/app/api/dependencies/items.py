@@ -17,6 +17,7 @@ from app.models.schemas.items import (
 from app.resources import strings
 from app.services.items import check_user_can_modify_item
 
+from fastapi.staticfiles import StaticFiles #new
 
 def get_items_filters(
     tag: Optional[str] = None,
@@ -57,3 +58,6 @@ def check_item_modification_permissions(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=strings.USER_IS_NOT_SELLER_OF_ITEM,
         )
+
+def configure_static(app):  #new
+    app.mount("/static", StaticFiles(directory="static"), name="static")
